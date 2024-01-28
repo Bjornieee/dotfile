@@ -1,0 +1,162 @@
+monitor=DP-1,1920x1080@165,autos,auto
+exec-once = waybar & hyprpaper & discord & mpd & mpc load coran & mpc pause-if-playing & btop & obsidian
+source = ~/.config/whypr/colors.conf
+env = XCURSOR_SIZE,24
+$w1 = hyprctl hyprpaper wallpaper "DP-1,~/.config/hypr/wallpaper/1.jpeg" 
+$w2 = hyprctl hyprpaper wallpaper "DP-1,~/.config/hypr/wallpaper/2.jpeg" 
+$w3 = hyprctl hyprpaper wallpaper "DP-1,~/.config/hypr/wallpaper/3.jpeg" 
+$w4 = hyprctl hyprpaper wallpaper "DP-1,~/.config/hypr/wallpaper/4.jpeg" 
+$w5 = hyprctl hyprpaper wallpaper "DP-1,~/.config/hypr/wallpaper/5.jpeg" 
+$w6 = hyprctl hyprpaper wallpaper "DP-1,~/.config/hypr/wallpaper/6.jpeg" 
+$w7 = hyprctl hyprpaper wallpaper "DP-1,~/.config/hypr/wallpaper/7.jpeg" 
+ 
+
+
+
+binds {
+    workspace_back_and_forth = true
+}
+input {
+    kb_layout = fr
+    follow_mouse = 1
+    sensitivity = -999999
+}
+
+general {
+    gaps_in = 8
+    gaps_out = 12
+    border_size = 3
+    col.active_border = $turquoise $cyan $arctic $blue 50deg
+    col.inactive_border = $nord0
+    layout = dwindle
+    resize_on_border = true
+    hover_icon_on_border = false
+}
+
+decoration {
+    rounding = 0
+    active_opacity = 0.9
+    inactive_opacity = 0.7
+    blur = yes
+    blur_size = 12
+    blur_passes = 3
+    blur_new_optimizations = on
+    blur_xray = true
+    drop_shadow = no
+    dim_inactive = true
+    dim_strength = 0.4
+    dim_special = 0.5
+}
+
+animations {
+    enabled = yes
+}
+
+dwindle {
+    # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
+    pseudotile = yes # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+    preserve_split = yes 
+    force_split = 2
+    no_gaps_when_only = true
+}
+
+gestures {
+    workspace_swipe = yes
+}
+
+misc {
+    disable_hyprland_logo = yes
+    focus_on_activate = yes
+    
+}
+# Example per-device config
+# See https://wiki.hyprland.org/Configuring/Keywords/#executing for more
+device:epic-mouse-v1 {
+    sensitivity = -0.5
+}
+
+# Example windowrule v1
+#windowrulev2 = workspace 4,tiling, class:^(.*)$
+windowrulev2 = workspace 4,class:^(kitty)$
+windowrulev2 = workspace 1,class:^(kitty)$, title:(btop)
+windowrulev2 = workspace 1,class:^(obsidian)$
+windowrulev2 = workspace 2,class:^(Code)$
+windowrulev2 = workspace 3,class:^(Google-chrome)$
+windowrule = workspace special silent,discord
+# Example windowrule v2
+# windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
+# See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
+$Mod=SUPER
+
+# Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
+bind = $Mod, Return, exec, kitty
+bind = $Mod_SHIFT, A, killactive, 
+bind = $Mod_SHIFT, E, exit, 
+bind = $Mod, F, fullscreen, 
+bind = $Mod, D, exec, rofi -show drun
+bind = $Mod, E, togglesplit
+bind = , F12, exec, brightnessctl set 5%+
+bind = , F11, exec, brightnessctl set 5%-
+bind = , XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 2%+
+bind = , XF86AudioLowerVolume, exec, exec wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 2%-
+bind = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bind = , XF86AudioPlay, exec, mpc toggle
+bind = , XF86AudioNext, exec, mpc next
+bind = , XF86AudioPrev, exec, mpc prev
+
+# Move focus with mainMod + arrow keys
+bind = $Mod, left, movefocus, l
+bind = $Mod, right, movefocus, r
+bind = $Mod, up, movefocus, u
+bind = $Mod, down, movefocus, d
+
+# Switch workspaces with mainMod + [0-9]
+bind = $Mod, ampersand, workspace, 1
+bind = $Mod, eacute, workspace, 2
+bind = $Mod, quotedbl, workspace, 3
+bind = $Mod, apostrophe, workspace, 4
+bind = $Mod, parenleft, workspace, 5
+bind = $Mod, minus, workspace, 6
+bind = $Mod, egrave, workspace, 7
+bind = $Mod, underscore, workspace, 8
+bind = $Mod, ccedilla, workspace, 9
+bind = $Mod,S,togglespecialworkspace
+
+bind = $Mod, ampersand, exec, $w1
+bind = $Mod, eacute, exec, $w2
+bind = $Mod, quotedbl, exec, $w3
+bind = $Mod, apostrophe, exec, $w4
+bind = $Mod, parenleft, exec, $w5
+bind = $Mod, minus, exec, $w6
+bind = $Mod, egrave, exec, $w7
+bind = $Mod, underscore, exec, $w8
+bind = $Mod, ccedilla, exec, $w9
+
+bind = $ModSHIFT, ampersand, exec, $w1
+bind = $ModSHIFT, eacute, exec, $w2
+bind = $ModSHIFT, quotedbl, exec, $w3
+bind = $ModSHIFT, apostrophe, exec, $w4
+bind = $ModSHIFT, parenleft, exec, $w5
+bind = $ModSHIFT, minus, exec, $w6
+bind = $ModSHIFT, egrave, exec, $w7
+bind = $ModSHIFT, underscore, exec, $w8
+bind = $ModSHIFT, ccedilla, exec, $w9
+
+#Move active window to a workspace with mainMod + SHIFT + [0-9]
+bind = $Mod_SHIFT, ampersand, movetoworkspace, 1
+bind = $Mod_SHIFT, eacute, movetoworkspace, 2
+bind = $Mod SHIFT, quotedbl, movetoworkspace, 3
+bind = $Mod SHIFT, apostrophe, movetoworkspace, 4
+bind = $Mod SHIFT, parenleft, movetoworkspace, 5
+bind = $Mod SHIFT, minus, movetoworkspace, 6
+bind = $Mod SHIFT, egrave, movetoworkspace, 7
+bind = $Mod SHIFT, underscore, movetoworkspace, 8
+bind = $Mod SHIFT, ccedilla, movetoworkspace, 9
+
+# Scroll through existing workspaces with mainMod + scroll
+bind = $Mod, mouse_down, workspace, e+1
+bind = $Mod, mouse_up, workspace, e-1
+
+# Move/resize windows with mainMod + LMB/RMB and dragging
+bindm = $Mod, mouse:273, movewindow
+bindm = $Mod, mouse:272, resizewindow

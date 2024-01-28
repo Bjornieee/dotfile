@@ -1,0 +1,16 @@
+preload = ~/.config/hypr/wallpaper/1.jpeg
+preload = ~/.config/hypr/wallpaper/2.jpeg
+preload = ~/.config/hypr/wallpaper/3.jpeg
+preload = ~/.config/hypr/wallpaper/4.jpeg
+preload = ~/.config/hypr/wallpaper/5.jpeg
+preload = ~/.config/hypr/wallpaper/6.jpeg
+preload = ~/.config/hypr/wallpaper/7.jpeg
+
+wallpaper = ,~/.config/hypr/wallpaper/1.jpeg
+wallpaper = ,~/.config/hypr/wallpaper/2.jpeg
+wallpaper = ,~/.config/hypr/wallpaper/3.jpeg
+wallpaper = ,~/.config/hypr/wallpaper/4.jpeg
+wallpaper = ,~/.config/hypr/wallpaper/5.jpeg
+wallpaper = ,~/.config/hypr/wallpaper/6.jpeg
+wallpaper = ,~/.config/hypr/wallpaper/7.jpeg
+
