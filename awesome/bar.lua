@@ -9,7 +9,7 @@ require("awful.hotkeys_popup.keys")
 local logout_menu_widget = require("logout_menu")
 local taglist = require("taglist")
 local calendar = require("calendar")
---local batteryarc = require("batteryarc")
+local battery = require("batteryarc")
 
 local mytextclock = wibox.widget.textclock()
 
@@ -25,7 +25,7 @@ bar:setup {
     {
         layout = wibox.layout.fixed.horizontal,
         spacing = 5,
-        batteryarc,
+        battery,
         mytextclock,
         logout_menu_widget(),
     },

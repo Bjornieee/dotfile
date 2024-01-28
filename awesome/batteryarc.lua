@@ -6,31 +6,27 @@ local watch = require("awful.widget.watch")
 
 local batteryarc_widget = {}
 
-local function worker(user_args)
+    local args =  {}
 
-    local args = user_args or {}
+    local font = 'Play 6'
+    local arc_thickness = 2
+    local show_current_level = false
+    local size = 18
+    local timeout = 10
+    local show_notification_mode = 'on_hover' -- on_hover / on_click
+    local notification_position = 'top_right' -- see naughty.notify position argument
 
-    local font = args.font or 'Play 6'
-    local arc_thickness = args.arc_thickness or 2
-    local show_current_level = args.show_current_level or false
-    local size = args.size or 18
-    local timeout = args.timeout or 10
-    local show_notification_mode = args.show_notification_mode or 'on_hover' -- on_hover / on_click
-    local notification_position = args.notification_position or 'top_right' -- see naughty.notify position argument
+    local main_color =beautiful.fg_color
+    local bg_color =  '#ffffff11'
+    local low_level_color =  '#e53935'
+    local medium_level_color = '#c0ca33'
+    local charging_color = '#43a047'
 
-    local main_color = args.main_color or beautiful.fg_color
-    local bg_color = args.bg_color or '#ffffff11'
-    local low_level_color = args.low_level_color or '#e53935'
-    local medium_level_color = args.medium_level_color or '#c0ca33'
-    local charging_color = args.charging_color or '#43a047'
+    local warning_msg_title =  'Houston, we have a problem'
+    local warning_msg_text = 'Battery is dying'
+    local warning_msg_position = 'bottom_right'
+    local enable_battery_warning = true
 
-    local warning_msg_title = args.warning_msg_title or 'Houston, we have a problem'
-    local warning_msg_text = args.warning_msg_text or 'Battery is dying'
-    local warning_msg_position = args.warning_msg_position or 'bottom_right'
-    local enable_battery_warning = args.enable_battery_warning
-    if enable_battery_warning == nil then
-        enable_battery_warning = true
-    end
 
     local text = wibox.widget {
         font = font,
@@ -56,7 +52,7 @@ local function worker(user_args)
 
     local last_battery_check = os.time()
 
-    --[[ Show warning notification ]]
+    -- Show warning notification
     local function show_battery_warning()
         naughty.notify {
             text = warning_msg_text,
@@ -73,9 +69,10 @@ local function worker(user_args)
     local function update_widget(widget, stdout)
         local charge = 0
         local status
+
         for s in stdout:gmatch("[^\r\n]+") do
             local cur_status, charge_str, _ = string.match(s, '.+: ([%a%s]+), (%d?%d?%d)%%,?(.*)')
-            if cur_status ~= nil and charge_str ~=nil then
+            if cur_status and charge_str then
                 local cur_charge = tonumber(charge_str)
                 if cur_charge > charge then
                     status = cur_status
@@ -94,11 +91,8 @@ local function worker(user_args)
             text_with_background.fg = main_color
         end
 
-        if show_current_level == true then
-            --- if battery is fully charged (100) there is not enough place for three digits, so we don't show any text
-            text.text = charge == 100
-                    and ''
-                    or string.format('%d', charge)
+        if show_current_level then
+            text.text = (charge == 100) and '' or string.format('%d', charge)
         else
             text.text = ''
         end
@@ -106,9 +100,8 @@ local function worker(user_args)
         if charge < 15 and charge > 0 then
             widget.colors = { low_level_color }
             if enable_battery_warning and status ~= 'Charging' and os.difftime(os.time(), last_battery_check) > 300 then
-                -- if 5 minutes have elapsed since the last warning
+                -- If 5 minutes have elapsed since the last warning
                 last_battery_check = os.time()
-
                 show_battery_warning()
             end
         elseif charge > 15 and charge < 40 then
@@ -122,6 +115,7 @@ local function worker(user_args)
 
     -- Popup with battery info
     local notification
+
     local function show_battery_status()
         awful.spawn.easy_async([[bash -c 'acpi']],
                 function(stdout, _, _, _)
@@ -141,14 +135,9 @@ local function worker(user_args)
         batteryarc_widget:connect_signal("mouse::leave", function() naughty.destroy(notification) end)
     elseif show_notification_mode == 'on_click' then
         batteryarc_widget:connect_signal('button::press', function(_, _, _, button)
-            if (button == 1) then show_battery_status() end
+            if button == 1 then show_battery_status() end
         end)
     end
 
     return batteryarc_widget
 
-end
-
-return setmetatable(batteryarc_widget, { __call = function(_, ...)
-    return worker(...)
-end })
