@@ -10,7 +10,10 @@ local logout_menu_widget = require("logout_menu")
 local taglist = require("taglist")
 local calendar = require("calendar")
 local battery = require("batteryarc")
-
+local cpu = require("cpu")
+local brightness = require("brightness")
+local volume = require("volume")
+--- VARIABLES ---
 local mytextclock = wibox.widget.textclock()
 
 --- BAR ---
@@ -25,7 +28,10 @@ bar:setup {
     {
         layout = wibox.layout.fixed.horizontal,
         spacing = 5,
-        battery,
+        cpu,
+        --brightness,
+        volume,
+        --battery,
         mytextclock,
         logout_menu_widget(),
     },

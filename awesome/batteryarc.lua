@@ -4,7 +4,7 @@ local watch = require("awful.widget.watch")
 
 --- VARIABLES ---
 local HOME = os.getenv('HOME')
-local ICON_DIR = HOME .. '/.config/awesome/icons/'
+local ICON_DIR = HOME .. '/.config/awesome/icons/bar/'
 local batteryarc_widget = {}
 local icon = wibox.widget {
     image = ICON_DIR .. 'battery.svg',

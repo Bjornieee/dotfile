@@ -74,9 +74,9 @@ awful.rules.rules = {
     },
 
 --- GAMES ---
---    { rule_any = {class = {"explorer.exe"}},
---      properties = {hidden = true, urgent = false}
---    },
+    { rule_any = {class = {"explorer.exe"}},
+    properties = {hidden = true, tag = " 󰊴 ", urgent = false}
+    },
 
     {rule_any = {class = {"leagueclient.exe"},
     properties = {border_width = 0,}}

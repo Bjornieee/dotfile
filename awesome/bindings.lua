@@ -75,7 +75,10 @@ bindings = {}
                 awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
                 awful.key({ modkey }, "d", function () awful.spawn.with_shell("rofi -show drun")
-                end )
+                end ),
+                awful.key({   }, "XF86AudioLowerVolume" , function () awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ -2%") end),
+                awful.key({   }, "XF86AudioRaiseVolume" , function () awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ +2%") end)
+
         ),}
 
     for i = 1, 9 do
